@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{% block title %}Hinzufügen{% endblock %}</h1>
+
+<p>Hier können neue Keys hinzugefügt werden. Entweder die ID wird manuell eingegeben oder die Schlüsselkarte wird an den Reader gehalten und dann ohne ein Passwort einzugeben mit der Taste '#' an das System übermittelt. Nach neuladen der Seite sollte die gescannte ID im Feld stehen</p>
+
+<form>
+  <label for="id">ID:</label></br>
+  <input type="text" id="id" name="id" pattern="[0-9]{10}" required title="genau 10 ziffern" value="{{sent_id}}"></br>
+
+  <label for="password">Passwort:</label></br>
+  <input type="password" id="pwd" name="pwd" pattern="[0-9]{4}" required title="genau 4 ziffern"></br>
+
+  <input id="button" type="submit" value="hinzufügen">
+</form>
+
+{% endblock %}

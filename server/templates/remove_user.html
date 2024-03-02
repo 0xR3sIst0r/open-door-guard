@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{% block title %}Löschen{% endblock %}</h1>
+
+<p>Hier können Karten wieder gelöscht werden. Entweder die ID wird manuell eingegeben oder die Schlüsselkarte wird an den Reader gehalten und dann ohne ein Passwort einzugeben mit der Taste '#' an das System übermittelt. Nach neuladen der Seite sollte die gescannte ID im Feld erscheinen</p>
+
+<form>
+  <label for="id">ID:</label></br>
+  <input type="text" id="id" name="id" pattern="[0-9]{10}" required title="genau 10 ziffern" value="{{sent_id}}"></br>
+
+  <input type="submit" value="löschen">
+</form>
+
+{% endblock %}

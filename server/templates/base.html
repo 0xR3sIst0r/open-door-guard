@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet"  type="text/css" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>open-door-guard Schlüsselverwaltung</h1>
+    </div>
+    <hr>
+    <div class="container">
+        <nav class="menu">
+            <a href="/">Übersicht</a>
+            <a href="/add_user">Hinzufügen</a>
+            <a href="/remove_user">Löschen</a>
+            <a href="/help">Hilfe</a>
+        </nav>
+    </div>
+    <hr>
+
+    <div class="container">
+        <div class="content">
+            {% block content %} {% endblock %}
+        </div>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+            <script type="text/javascript">
+                alert('{{message}}')
+            </script>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+</body>
+</html>
