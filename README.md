@@ -1,3 +1,3 @@
-![Image](doc/banner.png?raw=true)
+![Banner](docs/banner.png?raw=true)
 
-# open-door-guard
+This Project's goal is to build a DIY electronic door system to make spaces accessible for many people in a secure way and on a budget. This is still an early concept version but is currently being tested in a real setting.
