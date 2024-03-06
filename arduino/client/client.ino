@@ -8,6 +8,7 @@
 
 // pins
 #define DOOR_PIN D0
+#define INDICATOR_PIN D4
 
 // wifi vars (from config.h)
 const char* ssid = SSID;
@@ -16,7 +17,7 @@ const String serverName = "http://192.168.0.2:5000";
 const int port = 5000;
 
 // rfid pad
-MFRC522 mfrc522(D8, D4);  // Create MFRC522 instance (SS_Pin und Reset Pin)
+MFRC522 mfrc522(D8, D3);  // Create MFRC522 instance (SS_Pin und Reset Pin)
 
 // keypad vars
 Adafruit_PCF8574 pcf;
@@ -27,10 +28,17 @@ const int READ_NEW_CARD_DELAY = 3000;
 
 
 void setup() {
-  // setup door pin
+  // setup pins
   pinMode(DOOR_PIN, OUTPUT);
+  pinMode(INDICATOR_PIN, OUTPUT);
   digitalWrite(DOOR_PIN, LOW);
-  
+  digitalWrite(INDICATOR_PIN, HIGH);
+
+  // indicate restart
+  digitalWrite(INDICATOR_PIN, LOW);
+  delay(2000);
+  digitalWrite(INDICATOR_PIN, HIGH);
+
   // setup serial
   Serial.begin(115200);   // Initialize serial communications with the PC
 
@@ -69,6 +77,10 @@ void setup() {
   pcf.pinMode(5, INPUT);
   pcf.pinMode(6, INPUT);
 
+  // indicate ready
+  digitalWrite(INDICATOR_PIN, LOW);
+  delay(200);
+  digitalWrite(INDICATOR_PIN, HIGH);
 }
 
 
@@ -138,7 +150,7 @@ void login(unsigned int id, char pin[]) {
     beep(2);
   } else {
     Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpResponseCode).c_str());
-    ESP.reset();
+    //ESP.reset();
     beep(3);
   }
   // Free resources
@@ -161,6 +173,9 @@ void beep(int id) {
   // 1 (ok) 2 (wrong login data) 3 (problem with wifi)
   Serial.print("beep ");
   Serial.println(id);
+  digitalWrite(INDICATOR_PIN, LOW);
+  delay(300);
+  digitalWrite(INDICATOR_PIN, HIGH);
 }
 
 
