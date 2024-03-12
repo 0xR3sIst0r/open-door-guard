@@ -8,7 +8,6 @@ KEEP_LAST_SENT_TIME = 20
 last_sent_id = ''
 last_sent_time = 0
 
-
 class UserDB():
     def __init__(self, path):
         self.path = path
@@ -76,6 +75,9 @@ def main():
 def login():
     user_id = request.args.get("id")
     user_pin = request.args.get("pin")
+
+    # fill user_id to length 10
+    if len(user_id) < 10: user_id = "0" * (10 - len(user_id)) + user_id
 
     global last_sent_time
     last_sent_time = time()
