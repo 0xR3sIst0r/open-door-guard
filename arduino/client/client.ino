@@ -150,8 +150,9 @@ void login(unsigned int id, char pin[]) {
     beep(2);
   } else {
     Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpResponseCode).c_str());
-    //ESP.reset();
+    // connection failed error
     beep(3);
+    ESP.reset();
   }
   // Free resources
   http.end();
@@ -169,13 +170,18 @@ void openDoor() {
 
 
 void beep(int id) {
-  // place holder for beeping
-  // 1 (ok) 2 (wrong login data) 3 (problem with wifi)
+  // 1 (ok) 2 (wrong login data) 3/4/5 (problem with connection)
   Serial.print("beep ");
   Serial.println(id);
-  digitalWrite(INDICATOR_PIN, LOW);
-  delay(300);
-  digitalWrite(INDICATOR_PIN, HIGH);
+  
+  for(int i = 0; i < id; i++) {
+    digitalWrite(INDICATOR_PIN, LOW);
+    delay(200);
+    digitalWrite(INDICATOR_PIN, HIGH);
+    if (i < id-1) {
+      delay(200);
+    }
+  }
 }
 
 
